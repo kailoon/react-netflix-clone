@@ -37,10 +37,14 @@ Header.Search = function HeaderSearch({
     ...restProps
 }) {
     const [searchActive, setSearchActive] = useState(false)
-
+    let focusRef = useRef(null)
+    function clickHandler() {
+        setSearchActive(!searchActive)
+        focusRef.current.focus()
+    }
     return (
         <Search {...restProps}>
-            <SearchIcon onClick={() => setSearchActive(!searchActive)}>
+            <SearchIcon onClick={clickHandler}>
                 <img src="/images/icons/search.png" alt="Search" />
             </SearchIcon>
             <SearchInput
@@ -48,6 +52,7 @@ Header.Search = function HeaderSearch({
                 onChange={({ target }) => setSearchTerm(target.value)}
                 placeholder="Search files and series"
                 active={searchActive}
+                ref={focusRef}
             />
         </Search>
     )
